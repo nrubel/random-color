@@ -12,6 +12,7 @@
         margin: 0;
         padding: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -22,45 +23,92 @@
         transition: all 300ms linear 0s;
       }
       .box {
-        border: 1px dashed white;
+        border: 1px dashed rgba(255, 255, 255, 1);
         padding: 40px;
-        text-align: center;
+        margin-top: auto;
+        background-color: rgba(255, 255, 255, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
       }
       h1 {
         margin-top: 0;
-        margin-bottom: 30px;
-        text-shadow: 0 0 6px #161616;
+        margin-bottom: 0;
+        color: #161616;
+        order: 1;
       }
       #btn {
-        background-color: white;
+        background-color: #161616;
         padding: 5px 40px;
-        border: 2px solid white;
+        border: none;
         font-size: 24px;
-        box-shadow: 0 0 20px 2px #cdcdcd;
         cursor: pointer;
+        color: white;
+        order: 3;
+        border-radius: 25px;
+        font-weight: 300;
       }
       #code {
-        font-size: 32px;
-        margin-top: 20px;
-        display: none;
+        font-size: 24px;
+        margin: 15px 0;
+        display: flex;
+        order: 2;
+        color: #161616;
+        align-items: center;
+      }
+      #code div {
+        width: 10px;
+        height: 10px;
+        margin-right: 10px;
+        border-radius: 10px;
+      }
+      footer {
+        margin-top: auto;
+        padding: 15px 0;
+        background: rgba(255, 255, 255, 0.4);
+        width: 100vw;
+        text-align: center;
+        color: #161616;
+        line-height: 1;
+      }
+      footer a {
+        color: #161616;
+      }
+      footer span {
+        color: red;
+        font-size: 24px;
       }
     </style>
   </head>
   <body>
     <div class="box">
       <h1>Click button to get random RGB color</h1>
-      <button id="btn">Generate</button>
       <div id="code"></div>
+      <button id="btn">Generate</button>
     </div>
 
+    <footer>Made with <span>&hearts;</span> by <a href="https://nasiruddin.dev">Nasir Uddin</a></footer>
+
     <script>
+      let bodyEl = document.querySelector("body"),
+        codeEl = document.querySelector("#code"),
+        btn = document.querySelector("#btn"),
+        r = 22,
+        g = 22,
+        b = 22;
+      function colors(isWindow = true) {
+        bodyEl.setAttribute("style", `background-color: rgb(${r},${g},${b})`);
+        codeEl.innerHTML = `<div id='colorbox' style='background-color: rgb(${r},${g},${b})'></div>rgb(${r},${g},${b})`;
+        if (!isWindow) btn.setAttribute("style", `background-color: rgb(${r},${g},${b})`);
+      }
+
+      window.addEventListener("on", colors);
       document.getElementById("btn").addEventListener("click", function () {
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255);
-        const b = Math.floor(Math.random() * 255);
-        document.querySelector("body").setAttribute("style", `background-color: rgb(${r},${g},${b})`);
-        document.querySelector("#code").setAttribute("style", "display: block");
-        document.querySelector("#code").innerHTML = `rgb(${r},${g},${b})`;
+        r = Math.floor(Math.random() * 255);
+        g = Math.floor(Math.random() * 255);
+        b = Math.floor(Math.random() * 255);
+        colors(false);
       });
     </script>
   </body>
